@@ -11,19 +11,18 @@
 
 
 def func_show(func):
-
-    def get_sq(**kwargs):
-        x = 1
-        for v in kwargs.values():
-            x *= int(v)
-        func(x)
-    return get_sq
+    def wrapper(width, height):
+        res = func(width, height)  # обратимся к оригинальной функции для получения результата
+        print(f"Площадь прямоугольника: {res}")
+        return res
+    return wrapper  # результат работы декоратора - вызов нашей функции-обработчика
 
 
 @func_show
-def result(kwargs):
-    print(f"Площадь прямоугольника: {kwargs}")
+def get_sq(width, height):
+    return width*height
 
 
 if __name__ == '__main__':
-    result(width=4, height=6)
+    # вызов декорированной функции
+    get_sq(width=4, height=6)
